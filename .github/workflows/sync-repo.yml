@@ -38,7 +38,6 @@ jobs:
       if: failure() # Only run if previous step fails
       run: |
         # Resolve merge conflicts automatically
-        git merge --strategy-option theirs || exit 0
         git add . # Stage resolved files
         git rebase --continue || exit 0 # Continue the rebase
     
