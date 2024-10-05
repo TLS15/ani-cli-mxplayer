@@ -32,7 +32,7 @@ jobs:
 
     
     - name: Diff
-      run: git diff --name-only ani-cli/master
+      run: git diff --name-only ani-cli master ani-cli
 
     - name: Pull
       run: 
