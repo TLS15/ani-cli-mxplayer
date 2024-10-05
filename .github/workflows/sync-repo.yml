@@ -29,10 +29,8 @@ jobs:
     # - name: pull changes
     #   run: git pull ani-cli master
 
-    - name: Pull with rebase
-      run: |
-        git config pull.rebase true
-        git pull ani-cli master --rebase
+    - name: Pull
+      run: git pull ani-cli master
     
     - name: Push changes to forked repo
       run:
