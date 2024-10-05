@@ -31,6 +31,7 @@ jobs:
 
     - name: Pull
       run: |
+        git diff ani-cli/master
         git config pull.rebase false
         git pull --allow-unrelated-histories ani-cli master
     
