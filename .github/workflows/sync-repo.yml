@@ -30,7 +30,9 @@ jobs:
     #   run: git pull ani-cli master
 
     - name: Pull
-      run: git pull ani-cli master
+      run: |
+        git config pull.rebase false
+        git pull ani-cli master
     
     - name: Push changes to forked repo
       run:
