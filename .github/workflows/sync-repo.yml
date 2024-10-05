@@ -22,7 +22,7 @@ jobs:
     - name: Add upstream remote
       run: |
         git remote add ani-cli https://github.com/pystardust/ani-cli
-        git remote add origin https://github.com/TLS15/ani-cli-mxplayer
+        git remote add forked https://github.com/TLS15/ani-cli-mxplayer
         git config --global user.name "TLS15"
         git config --global user.email "slytamer088@gmail.com"
 
@@ -31,4 +31,4 @@ jobs:
 
     - name: Push changes to forked repo
       run:
-        git push --force https://TLS15:${{ secrets.PAT_TOKEN }}@github.com/TLS15/ani-cli-mxplayer origin/master
+        git push --force https://TLS15:${{ secrets.PAT_TOKEN }}@github.com/TLS15/ani-cli-mxplayer forked/master
