@@ -30,7 +30,7 @@ jobs:
       run: git fetch ani-cli
 
     - name: Diff
-      run: git diff --name-only ani-cli/master
+      run: git diff ani-cli/master
 
     - name: Pull
       run: |
