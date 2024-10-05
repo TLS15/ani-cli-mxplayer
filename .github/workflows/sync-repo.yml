@@ -1,0 +1,39 @@
+name: sync-repo
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 18 * * *' # Runs every day at midnight
+  push:
+    branches:
+      - master
+
+permissions: write-all
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout local repo
+      uses: actions/checkout@v4
+      with:
+         ref: master
+
+    - name: Add upstream remote
+      run: |
+        git remote add ani-cli https://github.com/pystardust/ani-cli
+        git remote add forked https://github.com/TLS15/ani-cli-mxplayer
+        git config --global user.name "TLS15"
+        git config --global user.email "slytamer088@gmail.com"
+
+    # - name: pull changes
+    #   run: git pull ani-cli master
+
+    - name: Pull with rebase
+      run: |
+        git config pull.rebase true
+        git pull ani-cli master --rebase
+    
+    - name: Push changes to forked repo
+      run:
+        git push --force https://TLS15:${{ secrets.GITHUB_TOKEN }}@github.com/TLS15/ani-cli-mxplayer master
