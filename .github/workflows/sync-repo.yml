@@ -32,7 +32,7 @@ jobs:
     - name: Pull
       run: |
         git config pull.rebase false
-        git pull ani-cli master
+        git pull --allow-unrelated-histories ani-cli master
     
     - name: Push changes to forked repo
       run:
