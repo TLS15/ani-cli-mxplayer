@@ -36,4 +36,4 @@ jobs:
     
     - name: Push changes to forked repo
       run:
-        git push --force https://TLS15:${{ secrets.PAT_TOKEN }}@github.com/TLS15/ani-cli-mxplayer forked/master
+        git push --force https://TLS15:${{ secrets.GITHUB_TOKEN }}@github.com/TLS15/ani-cli-mxplayer master
