@@ -1,3 +1,4 @@
+# made ani-cli executable
 name: sync-repo
 on:
   workflow_dispatch:
