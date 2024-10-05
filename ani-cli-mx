@@ -55,6 +55,8 @@ help_info() {
         Specify the video quality
       -v, --vlc
         Use VLC to play the video
+      -m, --mx
+        Use mx to play the video (android)
       -V, --version
         Show the version of the script
       -h, --help
@@ -281,6 +283,7 @@ play_episode() {
             ;;
         android_mpv) nohup am start --user 0 -a android.intent.action.VIEW -d "$episode" -n is.xyz.mpv/.MPVActivity >/dev/null 2>&1 & ;;
         android_vlc) nohup am start --user 0 -a android.intent.action.VIEW -d "$episode" -n org.videolan.vlc/org.videolan.vlc.gui.video.VideoPlayerActivity -e "title" "${allanime_title}Episode ${ep_no}" >/dev/null 2>&1 & ;;
+        android_mx) nohup am start --user 0 -a android.intent.action.VIEW -d "$episode" -n com.mxtech.videoplayer.ad/com.mxtech.videoplayer.ad.ActivityScreen >/dev/null 2>&1 & ;;
         *iina*) nohup "$player_function" --no-stdin --keep-running --mpv-force-media-title="${allanime_title}Episode ${ep_no}" "$episode" >/dev/null 2>&1 & ;;
         flatpak_mpv) flatpak run io.mpv.Mpv --force-media-title="${allanime_title}Episode ${ep_no}" "$episode" >/dev/null 2>&1 & ;;
         vlc*) nohup "$player_function" --play-and-exit --meta-title="${allanime_title}Episode ${ep_no}" "$episode" >/dev/null 2>&1 & ;;
@@ -363,6 +366,14 @@ while [ $# -gt 0 ]; do
                 *ndroid*) player_function="android_vlc" ;;
                 MINGW* | *WSL2*) player_function="vlc.exe" ;;
                 *ish*) player_function="iSH" ;;
+                *) player_function="vlc" ;;
+            esac
+            ;;
+        -m | --mx)
+            case "$(uname -a)" in
+                *ndroid*) player_function="android_mx" ;;
+                # MINGW* | *WSL2*) player_function="vlc.exe" ;;
+                # *ish*) player_function="iSH" ;;
                 *) player_function="vlc" ;;
             esac
             ;;
@@ -508,7 +519,9 @@ while cmd=$(printf "next\nreplay\nprevious\nselect\nchange_quality\nquit" | nth 
     play
 done
 
-# ani-cli
+# Forked by TLS15
+# 
+#  ani-cli
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
