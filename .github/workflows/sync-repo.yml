@@ -26,9 +26,14 @@ jobs:
         git config --global user.name "TLS15"
         git config --global user.email "slytamer088@gmail.com"
 
-    - name: pull changes
-      run: git pull ani-cli master
+    # - name: pull changes
+    #   run: git pull ani-cli master
 
+    - name: Pull with rebase
+      run: |
+        git config pull.rebase true
+        git pull ani-cli master --rebase
+    
     - name: Push changes to forked repo
       run:
         git push --force https://TLS15:${{ secrets.PAT_TOKEN }}@github.com/TLS15/ani-cli-mxplayer forked/master
