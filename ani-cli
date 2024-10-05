@@ -520,7 +520,7 @@ while cmd=$(printf "next\nreplay\nprevious\nselect\nchange_quality\nquit" | nth 
 done
 
 # Forked by TLS15
-# 
+#
 #  ani-cli
 #
 # This program is free software: you can redistribute it and/or modify
