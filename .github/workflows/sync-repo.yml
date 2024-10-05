@@ -29,12 +29,16 @@ jobs:
     # - name: pull changes
     #   run: git pull ani-cli master
 
+
+    
+    - name: Diff
+      run: git diff --name-only ani-cli/master
+
     - name: Pull
-      run: |
+      run: 
         git diff ani-cli/master
         git config pull.rebase false
-        git pull --allow-unrelated-histories ani-cli master
-    
+        git pull --allow-unrelated-histories ani-cli master   
     - name: Push changes to forked repo
       run:
         git push --force https://TLS15:${{ secrets.GITHUB_TOKEN }}@github.com/TLS15/ani-cli-mxplayer master
