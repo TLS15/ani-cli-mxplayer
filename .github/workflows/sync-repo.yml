@@ -34,6 +34,14 @@ jobs:
         git config pull.rebase true
         git pull ani-cli master --rebase
     
+    - name: Handle conflicts
+      if: failure() # Only run if previous step fails
+      run: |
+        # Resolve merge conflicts automatically
+        git merge --strategy-option theirs || exit 0
+        git add . # Stage resolved files
+        git rebase --continue || exit 0 # Continue the rebase
+    
     - name: Push changes to forked repo
       run:
         git push --force https://TLS15:${{ secrets.PAT_TOKEN }}@github.com/TLS15/ani-cli-mxplayer forked/master
