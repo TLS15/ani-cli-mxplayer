@@ -54,6 +54,8 @@ help_info() {
         Delete history
       -l, --logview
         Show logs
+      -m, --mx
+        Use MXPlayer to play the video (Android only)
       -s, --syncplay
         Use Syncplay to watch with friends
       -S, --select-nth
@@ -101,7 +103,7 @@ version_info() {
 }
 
 update_script() {
-    update="$(curl -s -A "$agent" "https://raw.githubusercontent.com/pystardust/ani-cli/master/ani-cli")" || die "Connection error"
+    update="$(curl -s -A "$agent" "https://raw.githubusercontent.com/TLS15/ani-cli-mxplayer/master/ani-cli")" || die "Connection error"
     update="$(printf '%s\n' "$update" | diff -u "$0" -)"
     if [ -z "$update" ]; then
         printf "Script is up to date :)\n"
@@ -320,6 +322,7 @@ play_episode() {
             fi
             ;;
         android_mpv) nohup am start --user 0 -a android.intent.action.VIEW -d "$episode" -n is.xyz.mpv/.MPVActivity >/dev/null 2>&1 & ;;
+        android_mx) nohup am start --user 0 -a android.intent.action.VIEW -d "$episode" -n com.mxtech.videoplayer.ad/com.mxtech.videoplayer.ad.ActivityScreen >/dev/null 2>&1 & ;;
         android_vlc) nohup am start --user 0 -a android.intent.action.VIEW -d "$episode" -n org.videolan.vlc/org.videolan.vlc.gui.video.VideoPlayerActivity -e "title" "${allanime_title}Episode ${ep_no}" >/dev/null 2>&1 & ;;
         *iina*) nohup $player_function --no-stdin --keep-running --mpv-force-media-title="${allanime_title}Episode ${ep_no}" $subs_flag $refr_flag "$episode" >/dev/null 2>&1 & ;;
         flatpak_mpv) flatpak run io.mpv.Mpv --force-media-title="${allanime_title}Episode ${ep_no}" "$episode" $subs_flag $refr_flag >/dev/null 2>&1 & ;;
@@ -405,6 +408,14 @@ while [ $# -gt 0 ]; do
                 *ndroid*) player_function="android_vlc" ;;
                 MINGW* | *WSL2*) player_function="vlc.exe" ;;
                 *ish*) player_function="iSH" ;;
+                *) player_function="vlc" ;;
+            esac
+            ;;
+        -m | --mx)
+            case "$(uname -a)" in
+                *ndroid*) player_function="android_mx" ;;
+                # MINGW* | *WSL2*) player_function="vlc.exe" ;;
+                # *ish*) player_function="iSH" ;;
                 *) player_function="vlc" ;;
             esac
             ;;
